@@ -1,0 +1,12 @@
+{% import 'matches/matchTable.html.twig' as matchTable %}
+
+<div class="row pt-3 pb-2 mb-3 border-bottom">
+    <div class="col">
+        <h2>Ukončené zápasy</h2>
+        {{ matchTable.generate(finishedMatches, true) }}
+    </div>
+    <div class="col">
+        <h2>Budoucí zápasy</h2>
+        {{ matchTable.generate(futureMatches) }}
+    </div>
+</div>
