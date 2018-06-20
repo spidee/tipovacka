@@ -1,0 +1,45 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% if error %}
+    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+{% endif %}
+
+<div id="login_form" class="form-signin">
+    {% if error %}
+        <div class="alert alert-danger">
+            <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        </div>
+    {% endif %}
+
+    <form action="{{ path("fos_user_security_check") }}" method="post" >
+
+        <h2 class="form-signin-heading">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</h2>
+
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+
+        <label class="sr-only" for="username">{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</label>
+        <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" placeholder="{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}" required="required" autofocus />
+
+        <label class="sr-only" for="password">{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</label>
+        <input class="form-control" type="password" id="password" name="_password" placeholder="{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}" required="required" />
+
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" id="remember_me" name="_remember_me" value="on" /> {{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}
+            </label>
+
+            {#<div class="forgotten_password">
+                <a href="{{ url('fos_user_resetting_request') }}" title="{{ 'forgotten_password'|trans({}, 'messages') }}">{{ 'forgotten_password'|trans({}, 'messages') }}</a>
+            </div>#}
+        </div>
+        {% if csrf_token %}
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+        {% endif %}
+
+        <button class="btn btn-lg btn-primary btn-block" name="_submit" type="submit">{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}</button>
+    </form>
+</div>
+
+
+
+

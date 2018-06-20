@@ -1,0 +1,64 @@
+{% macro generate(matches, showResults) -%}
+    {# @var matches \App\Entity\Match[] #}
+    {# @var showResults bool #}
+    {% import _self as matchTable %}
+    {% set previousMatchDate = null %}
+    <div class="table-responsive">
+        <table class="table table-striped table-sm">
+            <thead>
+            <tr>
+                <th>Datum</th>
+                <th class="d-none d-sm-table-cell">Skupina/Fáze</th>
+                <th>Domácí</th>
+                <th>Hosté</th>
+                {% if showResults %}
+                    <th><span class="d-none d-sm-block">Výsledek</span><span class="d-block d-sm-none"></span></th>
+                {% endif %}
+                {% if app.user %}
+                    <th><span class="d-none d-sm-block">Tvůj tip/body</span><span class="d-block d-sm-none">Tip</span></th>
+                    <th></th>
+                {% endif %}
+            </tr>
+            </thead>
+            <tbody>
+            {% for match in matches %}
+                <tr{% if previousMatchDate and match.date|date('jny') != previousMatchDate.date|date('jny') %} class="next-day-divider"{% endif %}>
+                    <td>{{ match.date | date }}</td>
+                    <td class="d-none d-sm-table-cell">{{ match.group | trans }}</td>
+                    <td>{{ matchTable.showTeam(match.homeTeam) }}</td>
+                    <td>{{ matchTable.showTeam(match.awayTeam) }}</td>
+                    {% if showResults %}
+                        <td>
+                            {% if match.homeResult is not null and match.awayResult is not null %}
+                                <strong>{{ match.homeResult }}:{{ match.awayResult }}</strong>
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </td>
+                    {% endif %}
+                    {% if app.user %}
+                        {# @var userTip \App\Entity\Tip #}
+                        {% set userTip = match.userTip(app.user) %}
+                        <td>{% if userTip %}{{ userTip.homeGoalsTip }}:{{ userTip.awayGoalsTip }}{% if userTip.point %}&nbsp;(+<span class="added-points">{{ userTip.point.amount }}</span> bodů){% endif %}{% endif %}</td>
+                        <td class="others-tips">
+                        {% if not match.userCanEdit(app.user) %}
+                            <a href="javascript:void(0)" data-toggle="popover" data-html="true" data-trigger="hover" title="Tipy ostatních/body" data-content="<table class='other-tips-table'>{% for tip in match.sortedTips %}{# @var tip \App\Entity\Tip #}{% if tip.user != app.user %}<tr><td><strong>{{ tip.user.username }}</strong></td><td>{{ tip.homeGoalsTip }}:{{ tip.awayGoalsTip }}</td><td>{% if tip.point %}+<span class='added-points'>{{ tip.point.amount }}</span> b.{% endif %}</td></tr>{% endif %}{% endfor %}</table>">tipy</a>
+                        {% endif %}
+                        </td>
+                    {% endif %}
+                </tr>
+                {% set previousMatchDate = match.date %}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{%- endmacro %}
+
+{% macro showTeam(team) -%}
+    {% if team %}
+        <i class="flag-icon {{ team.emoji }}"></i>&nbsp;{{ team | trans}}
+    {% else %}
+        N/A
+    {% endif %}
+{%- endmacro %}

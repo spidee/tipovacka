@@ -14,6 +14,7 @@ Encore
     // .addEntry('js/app', './assets/js/app.js')
     // .addStyleEntry('css/app', './assets/css/app.scss')
     .addEntry('app', './assets/js/app.js')
+    .addEntry('blank', './assets/js/blank.js')
 
     // uncomment if you use Sass/SCSS files
     .enableSassLoader(function(sassOptions) {}, {

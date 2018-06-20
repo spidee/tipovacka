@@ -28,14 +28,14 @@ body {
   bottom: 0;
   left: 0;
   z-index: 100; /* Behind the navbar */
-  padding: 48px 0 0; /* Height of navbar */
+  padding: 65px 0 0; /* Height of navbar */
   box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
 }
 
 .sidebar-sticky {
   position: relative;
   top: 0;
-  height: calc(100vh - 48px);
+  height: calc(100vh - 65px);
   padding-top: .5rem;
   overflow-x: hidden;
   overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
@@ -77,7 +77,7 @@ body {
  */
 
 [role="main"] {
-  padding-top: 48px; /* Space for fixed navbar */
+  padding-top: 65px; /* Space for fixed navbar */
 }
 
 /*
@@ -90,6 +90,9 @@ body {
   font-size: 1rem;
   background-color: rgba(0, 0, 0, .25);
   box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+  img {
+    width: 40px;
+  }
 }
 
 .navbar .form-control {
@@ -109,9 +112,92 @@ body {
   box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
 }
 
+.bg-dark {
+  background: #0f4583 url("/img/background.png") repeat;
+}
+
 /*
  * Utilities
  */
 
 .border-top { border-top: 1px solid #e5e5e5; }
 .border-bottom { border-bottom: 1px solid #e5e5e5; }
+.top-info { color: #dcf1ff; font-size: 0.8rem; width: 100%; padding-left: 1rem; }
+.added-points { color: #0ba900; font-weight: 700 }
+.others-tips { color: #60789e; position: relative; }
+.next-day-divider { border-top: 2px solid #c6c6c6; }
+
+.other-tips-holder {
+  display: none;
+  position: absolute;
+  right: 0;
+  width: 200px;
+  background-color: #cbcbcb;
+  z-index: 20000000;
+}
+.others-tips:hover {
+  .other-tips-holder { display: block }
+}
+.other-tips-table {
+  td {
+    padding: 0 5px;
+  }
+}
+
+.place-order {
+  padding: 0.75rem 1rem 0.75rem 0 !important;
+  img {
+    display: none;
+  }
+  &.first {
+    padding-top: 0  !important;
+    span {
+      display: none;
+    }
+    img {
+      display: inline;
+      top: 10px;
+      position: relative;
+    }
+  }
+}
+
+@media screen and (max-width: 1404px) {
+  .place-order {
+    float: none !important;
+    padding: 0 !important;
+    text-align: center;
+    width: 100% !important;
+    display: block !important;
+  }
+  .place-under-order {
+    float: left !important;
+    text-align: center;
+    width: 100%;
+  }
+  .place-order.first {
+    img {
+      top: 0px;
+    }
+  }
+}
+
+
+@media screen and (max-width: 576px) {
+  [role="main"] {
+    padding-top: 100px; /* Space for fixed navbar */
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .top-info { width: auto }
+}
+
+@media screen and (max-width: 1602px) and (min-width: 576px) {
+  .navbar-brand span {
+    display: none;
+  }
+  .navbar-brand {
+    text-align: center;
+  }
+}

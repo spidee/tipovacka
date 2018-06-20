@@ -1,0 +1,1 @@
+wget -O - -q -t 1 http://tipovacka.spidee.cz/cron/update

@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{{ path('app_app_index') }}"><img src="{{ asset('img/logo.png') }}"><span>2018 FIFA World Cup Russia™</span></a>
+        {#<input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">#}
+        {#<span>2018 FIFA WORLD CUP RUSSIA™ - Tipovačka</span>#}
+        {% if app.user %}
+            <div class="top-info"><strong>{{ app.user.username }}</strong>: {{ app.user.totalPoints }} bodů</div>
+            <ul class="navbar-nav px-3">
+                <li class="nav-item text-nowrap">
+                    <a class="nav-link" href="{{ path('fos_user_security_logout') }}">Odhlásit</a>
+                </li>
+            </ul>
+        {% endif %}
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+
+            {{ render(controller(
+                'App\\Controller\\AppController::renderMenu', {'originalRequest': app.request}
+            )) }}
+
+            <main role="main" class="col-md-10 ml-sm-auto col-lg-10 px-4">
+                {% block content %}{% endblock %}
+            </main>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/2.9.0/css/flag-icon.min.css">
+    <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('build/app.js') }}"></script>
+{% endblock %}

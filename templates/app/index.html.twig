@@ -1,0 +1,52 @@
+{% extends 'layouts/default.html.twig' %}
+{% block content %}
+
+    {#<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Dashboard</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group mr-2">
+                <button class="btn btn-sm btn-outline-secondary">Share</button>
+                <button class="btn btn-sm btn-outline-secondary">Export</button>
+            </div>
+            <button class="btn btn-sm btn-outline-secondary dropdown-toggle">
+                <span data-feather="calendar"></span>
+                This week
+            </button>
+        </div>
+    </div>
+
+    <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>#}
+
+    {#<div class="row pt-3 pb-2 mb-3">
+        {% for i in 1..10 %}
+            <div class="col">
+                <div class="d-inline p-2 bg-primary text-white">{{ i }}</div><div class="d-inline p-2 bg-primary text-white">spidee</div><div class="d-inline p-2 bg-info text-white">20 bodů</div>
+            </div>
+        {% endfor %}
+    </div>#}
+
+    {#<div class="row pt-3 pb-2 mb-3">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Pořadí</a>
+            {% for i in 1..10 %}
+                <div class="d-inline p-2 btn btn-outline-secondary">{{ i }} spidee 20 bodů</div>
+            {% endfor %}
+        </nav>
+    </div>
+#}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mt-3">
+        {% set place = 0 %}
+        {% for user in users %}
+            {# @var user \App\Entity\User #}
+            {% set place = place + 1 %}
+            <div class="col">
+                <div class="d-inline float-left place-order{% if place == 1 %} first{% endif %}"><img src="{{ asset('img/first.png') }}"><span>{{ place }}.</span></div>
+                <div class="d-inline float-left place-under-order">
+                    <div><strong>{{ user.username }}</strong></div><span>{{ user.totalPoints }} bodů</span>
+                </div>
+            </div>
+        {% endfor %}
+    </nav>
+
+    {{ include('matches/matches.html.twig') }}
+{% endblock %}
